@@ -1,0 +1,1 @@
+# hapi-session-redis
