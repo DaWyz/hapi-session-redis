@@ -1,0 +1,47 @@
+{
+  "name": "hapi-session-redis",
+  "version": "1.0.0",
+  "description": "",
+  "main": "dist/index.js",
+  "directories": {
+    "example": "example"
+  },
+  "scripts": {
+    "test": "lab -a code -t 100 -p -L",
+    "test-cov-html": "lab -a code -r html -o coverage.html",
+    "start": "nodemon example/server.js",
+    "prepublish": "npm run build",
+    "build": ""
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/DaWyz/hapi-session-redis.git"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/DaWyz/hapi-session-redis/issues"
+  },
+  "homepage": "https://github.com/DaWyz/hapi-session-redis#readme",
+  "dependencies": {
+    "boom": "^3.2.2",
+    "hapi": "^14.1.0",
+    "joi": "^9.0.4",
+    "redis": "^2.6.2"
+  },
+  "devDependencies": {
+    "bcrypt": "^0.8.7",
+    "chai": "^3.5.0",
+    "code": "^3.0.2",
+    "eslint-config-hapi": "^10.0.0",
+    "eslint-plugin-hapi": "^4.0.0",
+    "lab": "^11.0.1",
+    "mocha": "^3.0.2",
+    "pg": "^6.0.3",
+    "sequelize": "^3.23.6",
+    "sinon": "^1.17.5",
+    "sinon-chai": "^2.8.0",
+    "uuid": "^2.0.2"
+  }
+}
