@@ -26,7 +26,8 @@
   "homepage": "https://github.com/DaWyz/hapi-session-redis#readme",
   "dependencies": {
     "boom": "^3.2.2",
-    "hapi": "^14.1.0",
+    "hapi": "^15.0.3",
+    "hoek": "^4.0.2",
     "joi": "^9.0.4",
     "redis": "^2.6.2"
   },

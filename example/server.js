@@ -22,6 +22,7 @@ server.register({
       db: 0,
       port: 6379
     },
+    ttl: 60 * 1000,
     isSecure: false,
     clearInvalid: true
   });
