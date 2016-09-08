@@ -67,6 +67,24 @@ const setResourceRoute = (server) => {
 };
 
 describe('authentication mecanism', () => {
+  if (process.env.NODE_ENV === 'functional') {
+    const Mockery = require('mockery');
+    Mockery.registerMock('redis', require('./mocks/redis.mock'));
+
+    lab.beforeEach((done) => {
+      Mockery.enable({
+        warnOnReplace: false,
+        warnOnUnregistered: false
+      });
+      done();
+    });
+
+    lab.afterEach((done) => {
+      Mockery.disable();
+      done();
+    });
+  }
+
   it('authenticates a request', (done) => {
     startServer({ redis: { host: '127.0.0.1', port: 6379, db: 0 }, ttl: 60 * 1000 }, (server) => {
       setLoginRoute(server);
