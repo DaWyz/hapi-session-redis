@@ -1,0 +1,11 @@
+{
+  extends: ["hapi"],
+  env: {
+    node: true,
+    es6: true
+  },
+  rules: {
+    "indent": ["error", 2],
+    "hapi/hapi-scope-start": "off"
+  }
+}
