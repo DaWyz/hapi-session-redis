@@ -4,7 +4,6 @@ const Hapi = require('hapi');
 const Boom = require('boom');
 
 const server = new Hapi.Server();
-const Db = require('./database');
 
 server.connection({ port: 3000 });
 
@@ -23,22 +22,14 @@ server.register({
       port: 6379
     },
     ttl: 60 * 1000,
-    isSecure: false,
-    clearInvalid: true
+    isSecure: false
   });
   server.auth.default('default');
 
   require('./sessions/routes')(server);
   require('./users/routes')(server);
 
-  Db.sequelize
-    .sync()
-    .then(() => {
-      server.start(() => {
-        console.log('Hapi server started @', server.info.uri);
-      });
-    })
-    .catch((err) => {
-      console.log('Unable to connect to the database:', err);
-    });
+  server.start(() => {
+    console.log('Hapi server started @', server.info.uri);
+  });
 });

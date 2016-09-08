@@ -7,7 +7,7 @@ module.exports = (server, db) => {
     config: {
       auth: false
     },
-    handler: require('./actions/login')(db)
+    handler: require('./actions/login')
   }, {
     method: 'DELETE',
     path: '/sessions',

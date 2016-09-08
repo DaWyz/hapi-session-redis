@@ -1,49 +1,34 @@
 'use strict';
 
-const Bcrypt = require('bcrypt');
 const Boom = require('boom');
 const Uuid = require('uuid');
 
-const User = require('../../database').User;
+const User = require('../../users/models/user.model');
 
-module.exports = () => {
-  return (request, reply) => {
-    if (request.auth.isAuthenticated) {
-      return reply('Already logged in !');
-    }
+module.exports = (request, reply) => {
+  if (request.auth.isAuthenticated) {
+    return reply('Already logged in !');
+  }
 
-    if (!request.payload || !request.payload.email || !request.payload.password) {
-      return reply(Boom.unauthorized('Email or password invalid...'));
-    }
+  if (!request.payload || !request.payload.email || !request.payload.password) {
+    return reply(Boom.unauthorized('Email or password invalid...'));
+  }
 
-    User
-      .findOne({
-        where: {
-          email: request.payload.email
-        }
-      })
-      .then(({ id, email, name, password }) => {
-        Bcrypt.compare(request.payload.password, password, (err, isValid) => {
-          if (!isValid || err) {
-            return reply(Boom.unauthorized('Email or Password invalid...'));
-          }
+  const { id, email, name, password } = User.findByEmail(request.payload.email);
+  if (request.payload.password !== password) {
+    return reply(Boom.unauthorized('Email or Password invalid...'));
+  }
 
-          const sid = Uuid.v4();
+  const sid = Uuid.v4();
 
-          request.redis
-            .set(sid, {
-              account: { id, email, name }
-            })
-            .then(() => {
-              reply('Successfuly logged in !');
-            })
-            .catch((err) => {
-              reply(Boom.badImplementation(err));
-            });
-        });
-      })
-      .catch(() => {
-        reply(Boom.unauthorized('Email or Password invalid...'));
-      });
-  };
+  request.redis
+    .set(sid, {
+      account: { id, email, name }
+    })
+    .then(() => {
+      reply('Successfuly logged in !');
+    })
+    .catch((err) => {
+      reply(Boom.badImplementation(err));
+    });
 };
