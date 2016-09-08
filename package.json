@@ -7,7 +7,7 @@
     "example": "example"
   },
   "scripts": {
-    "test": "lab -a code -t 100 -p -L",
+    "test": "lab -a code -t 100 -L",
     "test-cov-html": "lab -a code -r html -o coverage.html",
     "start": "nodemon example/server.js",
     "prepublish": "npm run build",

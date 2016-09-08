@@ -35,7 +35,7 @@ module.exports = () => {
               account: { id, email, name }
             })
             .then(() => {
-              reply('Successfuly logged in !').state(request.redis.cookieName, sid);
+              reply('Successfuly logged in !');
             })
             .catch((err) => {
               reply(Boom.badImplementation(err));
