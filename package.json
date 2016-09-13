@@ -7,22 +7,22 @@
     "example": "example"
   },
   "scripts": {
-    "functional": "lab -a code -t 100 -L -p -e functional",
+    "functional": "node_modules/.bin/lab -a code -t 100 -L -p -e functional",
     "start": "node_modules/.bin/nodemon example/server.js",
-    "test": "lab -a code -t 100 -L",
-    "test-cov-html": "lab -a code -r html -o coverage.html"
+    "test": "node_modules/.bin/lab -a code -t 100 -L",
+    "test-cov-html": "node_modules/.bin/lab -a code -r html -o coverage.html"
   },
   "repository": {
     "type": "git",
     "url": "git+https://github.com/DaWyz/hapi-session-redis.git"
   },
   "keywords": [
-    'auth',
-    'cookie',
-    'hapi',
-    'plugin',
-    'redis',
-    'session'
+    "auth",
+    "cookie",
+    "hapi",
+    "plugin",
+    "redis",
+    "session"
   ],
   "author": "Alban Esc <DaWyz>",
   "license": "MIT",
@@ -31,6 +31,7 @@
   },
   "homepage": "https://github.com/DaWyz/hapi-session-redis#readme",
   "dependencies": {
+    "bluebird": "^3.4.6",
     "boom": "4.0.0",
     "hapi": "15.0.3",
     "hoek": "4.0.2",

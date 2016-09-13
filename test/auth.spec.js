@@ -86,7 +86,7 @@ describe('authentication mecanism', () => {
   }
 
   it('authenticates a request', (done) => {
-    startServer({ redis: { host: '127.0.0.1', port: 6379, db: 0 }, ttl: 60 * 1000 }, (server) => {
+    startServer({ redis: { host: '127.0.0.1', port: 6379, db: 0 }, ttl: 60 * 1000, cookieTtl: 60 * 1000 }, (server) => {
       setLoginRoute(server);
       setResourceRoute(server);
 
@@ -108,7 +108,7 @@ describe('authentication mecanism', () => {
   });
 
   it('should logout the user and return 401 when requesting resource after logout', (done) => {
-    startServer({ redis: { host: '127.0.0.1', port: 6379, db: 0 }, ttl: 60 * 1000 }, (server) => {
+    startServer({ redis: { host: '127.0.0.1', port: 6379, db: 0 }, ttl: 60 * 1000, cookieTtl: 60 * 1000 }, (server) => {
       setLoginRoute(server);
       setResourceRoute(server);
       setLogoutRoute(server);
@@ -133,7 +133,7 @@ describe('authentication mecanism', () => {
   });
 
   it('should logout the user and clear the request (clearInvalid set)', (done) => {
-    startServer({ redis: { host: '127.0.0.1', port: 6379, db: 0 }, ttl: 60 * 1000, clearInvalid: true }, (server) => {
+    startServer({ redis: { host: '127.0.0.1', port: 6379, db: 0 }, ttl: 60 * 1000, cookieTtl: 60 * 1000, clearInvalid: true }, (server) => {
       setLoginRoute(server);
       setResourceRoute(server);
       setLogoutRoute(server);
@@ -162,7 +162,7 @@ describe('authentication mecanism', () => {
   });
 
   it('should return 401 when no cookie is set', (done) => {
-    startServer({ redis: { host: '127.0.0.1', port: 6379, db: 0 }, ttl: 60 * 1000 }, (server) => {
+    startServer({ redis: { host: '127.0.0.1', port: 6379, db: 0 }, ttl: 60 * 1000, cookieTtl: 60 * 1000 }, (server) => {
       setResourceRoute(server);
 
       server.inject({ url: '/resource' }, (res) => {
@@ -173,7 +173,7 @@ describe('authentication mecanism', () => {
   });
 
   it('should return 401 when auth cookie is invalid', (done) => {
-    startServer({ redis: { host: '127.0.0.1', port: 6379, db: 0 }, ttl: 60 * 1000 }, (server) => {
+    startServer({ redis: { host: '127.0.0.1', port: 6379, db: 0 }, ttl: 60 * 1000, cookieTtl: 60 * 1000 }, (server) => {
       setResourceRoute(server);
 
       server.inject({ url: '/resource', headers: { cookie: 'authentication=fakecookie' } }, (res) => {
@@ -184,7 +184,7 @@ describe('authentication mecanism', () => {
   });
 
   it('should extend ttl automatically', (done) => {
-    startServer({ redis: { host: '127.0.0.1', port: 6379, db: 0 }, keepAlive: true, ttl: 60 * 1000 }, (server) => {
+    startServer({ redis: { host: '127.0.0.1', port: 6379, db: 0 }, keepAlive: true, ttl: 60 * 1000, cookieTtl: 60 * 1000 }, (server) => {
       setLoginRoute(server);
       setResourceRoute(server);
 
@@ -212,7 +212,7 @@ describe('authentication mecanism', () => {
       callback(null, true, { username: 'tada' });
     };
 
-    startServer({ redis: { host: '127.0.0.1', port: 6379, db: 0 }, keepAlive: true, ttl: 60 * 1000, validateFunc }, (server) => {
+    startServer({ redis: { host: '127.0.0.1', port: 6379, db: 0 }, keepAlive: true, ttl: 60 * 1000, cookieTtl: 60 * 1000, validateFunc }, (server) => {
       setLoginRoute(server);
       setResourceRoute(server);
 
@@ -239,7 +239,7 @@ describe('authentication mecanism', () => {
       callback(null, false, { username: 'tada' });
     };
 
-    startServer({ redis: { host: '127.0.0.1', port: 6379, db: 0 }, keepAlive: true, ttl: 60 * 1000, validateFunc }, (server) => {
+    startServer({ redis: { host: '127.0.0.1', port: 6379, db: 0 }, keepAlive: true, ttl: 60 * 1000, cookieTtl: 60 * 1000, validateFunc }, (server) => {
       setLoginRoute(server);
       setResourceRoute(server);
 
@@ -263,7 +263,7 @@ describe('authentication mecanism', () => {
       callback({ error: 'failing' }, true, { username: 'tada' });
     };
 
-    startServer({ redis: { host: '127.0.0.1', port: 6379, db: 0 }, keepAlive: true, ttl: 60 * 1000, validateFunc }, (server) => {
+    startServer({ redis: { host: '127.0.0.1', port: 6379, db: 0 }, keepAlive: true, ttl: 60 * 1000, cookieTtl: 60 * 1000, validateFunc }, (server) => {
       setLoginRoute(server);
       setResourceRoute(server);
 
@@ -287,7 +287,7 @@ describe('authentication mecanism', () => {
       callback(null, true);
     };
 
-    startServer({ redis: { host: '127.0.0.1', port: 6379, db: 0 }, ttl: 60 * 1000, validateFunc }, (server) => {
+    startServer({ redis: { host: '127.0.0.1', port: 6379, db: 0 }, ttl: 60 * 1000, cookieTtl: 60 * 1000, validateFunc }, (server) => {
       setLoginRoute(server);
       setResourceRoute(server);
 
@@ -309,7 +309,7 @@ describe('authentication mecanism', () => {
   });
 
   it('should not clear a request with invalid session (clearInvalid not set)', (done) => {
-    startServer({ redis: { host: '127.0.0.1', port: 6379, db: 0 }, ttl: 60 * 1000 }, (server) => {
+    startServer({ redis: { host: '127.0.0.1', port: 6379, db: 0 }, ttl: 60 * 1000, cookieTtl: 60 * 1000 }, (server) => {
       setLoginRoute(server);
       setResourceRoute(server);
       server.inject({ url: '/login' }, (res) => {
@@ -328,7 +328,7 @@ describe('authentication mecanism', () => {
   });
 
   it('should clear a request with invalid session (clearInvalid set)', (done) => {
-    startServer({ redis: { host: '127.0.0.1', port: 6379, db: 0 }, ttl: 60 * 1000, clearInvalid: true }, (server) => {
+    startServer({ redis: { host: '127.0.0.1', port: 6379, db: 0 }, ttl: 60 * 1000, cookieTtl: 60 * 1000, clearInvalid: true }, (server) => {
       setLoginRoute(server);
       setResourceRoute(server);
       server.inject({ url: '/login' }, (res) => {
