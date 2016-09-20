@@ -1,6 +1,6 @@
 {
   "name": "hapi-session-redis",
-  "version": "1.0.0",
+  "version": "1.0.3",
   "description": "Cookie authentication plugin using redis as session store",
   "main": "dist/index.js",
   "directories": {
