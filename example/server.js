@@ -21,8 +21,11 @@ server.register({
       db: 0,
       port: 6379
     },
-    ttl: 60 * 1000,
-    isSecure: false
+    cookie: {
+      ttl: 60 * 1000,
+      isSecure: false
+    },
+    ttl: 60 * 1000
   });
   server.auth.default('default');
 

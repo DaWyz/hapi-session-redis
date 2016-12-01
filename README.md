@@ -1,6 +1,6 @@
 # hapi-session-redis
 
-Hapi session provides redis-based session management. Authentication is not part of this repo, you will have to implement it yourself via other means. Once you authenticate the user, the browser will receive a session cookie. 
+Hapi session provides redis-based session management. Authentication is not part of this repo, you will have to implement it yourself via other means. Once you authenticate the user, the browser will receive a session cookie.
 
 The following request containing the session cookie will be authenticated via the validateFunc provided as a parameter in case the cookie's request requires validation on each request.
 
@@ -10,16 +10,23 @@ run `npm install hapi-session-redis`
 
 ## Settings
 
-The 'redis' scheme takes the following options: 
+The 'redis' scheme takes the following options:
 
 - `cookieName`: the name of the cookie sent to the browser (default to authentication)
 - `prefixKey`: the prefix used in when saving to redis (default to auth)
 - `redis`: an object that will be passed to node_redis createClient
 - `ttl`: the redis expiry time
-- `cookieTtl`: cookie max-age (default to 30 days)
-- `isSecure`: force cookie to be send over secure connection (default to true)
-- `keepAlive`: refresh the cookie ttl 
-- `clearInvalid`: clear invalid cookie (default to false),
+- `cookie`: an object containing the cookie options
+  - `ttl`: cookie max-age (default to 30 days)
+  - `isSecure`: force cookie to be send over secure connection (default to true)
+  - `isHttpOnly`: set the flag HttpOnly (default to true)
+  - `isSameSite`: disable third-party usage for the cookie (default to Strict)
+  - `path`: indicates a URL path that must exist in the requested resource before sending the Cookie header
+  - `domain`: indicates the domain(s) for which the cookie should be sent
+  - `encoding`: method of encoding (none, base64, base64json or iron)
+  - `password`: password used for 'iron' encoding (must be at least 32 characters long).
+  - `clearInvalid`: clear invalid cookie (default to false)
+- `keepAlive`: refresh the cookie ttl
 - `validateFunc`: an optional session validation function used to validate the content of the session cookie on each request. Used to verify that the internal session state is still valid (e.g. user account still exists). The function has the signature `function(request, session, callback)` where:
   - `request` - is the Hapi request object of the request which is being authenticated.
   - `session` - is the session object set via request.cookieAuth.set().
