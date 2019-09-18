@@ -17,7 +17,7 @@ jobs:
         with:
           node-version: ${{ matrix.node-version }}
       - name: install redis package
-        run: apk add --no-cache redis
+        run: sudo apt-get install redis-server
       - name: install dependencies
         run: npm ci
       - name: run integration test
