@@ -1,11 +1,20 @@
 {
-  extends: ["hapi"],
-  env: {
-    node: true,
-    es6: true
+  "extends": ["@hapi/eslint-config-hapi"],
+  "parserOptions": {
+    "ecmaVersion": 2017,
+    "env": {
+      "node": true,
+      "es6": true
+    }
   },
-  rules: {
+  "rules": {
     "indent": ["error", 2],
-    "hapi/hapi-scope-start": "off"
+    "@hapi/hapi/scope-start": "off",
+    "padding-line-between-statements": "off",
+    "quotes": ["error", "single", { "avoidEscape": true }],
+    "space-before-function-paren": "off",
+    "brace-style": "off",
+    "no-buffer-constructor": "off",
+    "require-await": "off"
   }
 }

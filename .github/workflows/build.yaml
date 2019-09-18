@@ -1,0 +1,28 @@
+name: Build CI
+
+on: [push]
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+
+    strategy:
+      matrix:
+        node-version: [8.x, 10.x, 12.x]
+
+    steps:
+      - uses: actions/checkout@v1
+      - name: Use Node.js ${{ matrix.node-version }}
+        uses: actions/setup-node@v1
+        with:
+          node-version: ${{ matrix.node-version }}
+      - name: install redis package
+        run: sudo apt-get install redis-server -y
+      - name: install dependencies
+        run: npm ci
+      - name: run integration test
+        run: npm test
+      - name: run functional test
+        run: npm run functional
+      - name: lint code
+        run: npm run lint

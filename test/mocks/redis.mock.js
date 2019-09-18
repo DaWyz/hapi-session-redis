@@ -1,19 +1,19 @@
 'use strict';
 
 const Redis = {
-  RedisClient: function (settings) {
+  RedisClient: function(settings) {
     this.settings = settings;
     this.db = {};
     this.currentDb;
   },
-  Multi: function () {}
+  Multi: function() {}
 };
 
 Redis.createClient = (settings) => {
   return new Redis.RedisClient(settings);
 };
 
-Redis.RedisClient.prototype.select = function (dbName, callback) {
+Redis.RedisClient.prototype.select = function(dbName, callback) {
   if (this.db[dbName]) {
     this.currentDb = this.db[dbName];
     return callback(null, this.currentDb);
@@ -24,25 +24,30 @@ Redis.RedisClient.prototype.select = function (dbName, callback) {
   callback(null, this.currentDb);
 };
 
-Redis.RedisClient.prototype.expire = function (key, ttl, callback) {
+Redis.RedisClient.prototype.expire = function(key, ttl, callback) {
+  if (key === 'auth:makeredisclientfail') {
+    return callback('Redis Client Error when calling expire method');
+  }
+
   if (ttl === 0) {
     delete this.currentDb[key];
   }
   callback(null, key);
 };
 
-Redis.RedisClient.prototype.get = function (key, callback) {
+Redis.RedisClient.prototype.get = function(key, callback) {
   callback(null, this.currentDb[key] || null);
 };
 
-Redis.RedisClient.prototype.set = function (key, value, callback) {
+Redis.RedisClient.prototype.set = function(key, value, callback) {
+  if (key === 'auth:makeredisclientfail') {
+    return callback('Redis Client Error when calling set method');
+  }
   this.currentDb[key] = value;
 
   callback(null, this.currentDb);
 };
 
-Redis.RedisClient.prototype.on = function (event, action) {
-
-};
+Redis.RedisClient.prototype.on = function(event, action) {};
 
 module.exports = Redis;
