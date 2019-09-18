@@ -27,17 +27,20 @@ The 'redis' scheme takes the following options:
   - `password`: password used for 'iron' encoding (must be at least 32 characters long).
   - `clearInvalid`: clear invalid cookie (default to false)
 - `keepAlive`: refresh the cookie ttl
-- `validateFunc`: an optional session validation function used to validate the content of the session cookie on each request. Used to verify that the internal session state is still valid (e.g. user account still exists). The function has the signature `function(request, session, callback)` where:
-  - `request` - is the Hapi request object of the request which is being authenticated.
-  - `session` - is the session object set via request.cookieAuth.set().
-  - `callback` - a callback function with the signature function(err, isValid, credentials) where:
-  - `err` - an internal error.
-  - `isValid` - true if the content of the session is valid, otherwise false.
-  - `credentials` - a credentials object passed back to the application in request.auth.credentials. If value is null or undefined, defaults to session.
+- `validateFunc`: an optional session validation function used to validate the content of the session cookie on each request. Used to verify that the internal session state is still valid (e.g. user account still exists). The function has the signature `async function(request, session)` where:
+  
+  - `request`: is the Hapi request object of the request which is being authenticated.
+  - `session`: is the session object set via request.cookieAuth.set().
+
+  it must return an object with the following signature:
+
+  - `valid`: true if the content of the session is valid, otherwise false.
+  - `credentials`: a credentials object passed back to the application in request.auth.credentials. If value is null or undefined, defaults to session.
 
 ## Available methods
 
 When the redis scheme is enabled on a route, the `request.redis` object get decorated with the following methods:
+
 - `set(key, session)` - saves the session to redis. It must be called after a successful login.
   - `key` - is session id (you should safely generate this using a ramdom string by using something like uuid.v4).
   - `session` - must be an object (can't be null).
@@ -51,3 +54,55 @@ Because this scheme decorates the request object with session-specific methods, 
 ## Example
 
 example is available in the `example/` directory.
+
+## Contribute
+
+In order to contribute, please create a pull request and follow the PR template. make sure the tests are passing and linting is fine.
+
+You will need to install `redis` locally beforehand.
+
+```sh
+sudo apt-get install redis-server
+```
+
+If your redis server is not running locally, don't forget to change the hostname in [server.js](./examples/server.js), [auth.spec.js](./test/auth.spec.js) and [config.spec.js](./test/config.spec.js).
+
+Then, you can install dependencies and start the server.
+
+```sh
+npm install
+npm start
+```
+
+Make sure everything works by running:
+
+```sh
+npm run test
+npm run functional
+npm lint
+```
+
+If you want to play with the example folder, here is the list of endpoints you can call:
+
+- Login
+
+```sh
+curl -X POST -H "Content-Type: application/json" -c ./tmp/cookie.txt \
+ -d '{"email":"john@company.com","password":"supersafe"}' \
+ http://localhost:3000/sessions
+
+```
+
+- Query users
+
+```sh
+curl -X GET http://localhost:3000/users -b ./tmp/cookie.txt
+```
+
+- Logout
+
+```sh
+curl -X DELETE http://localhost:3000/sessions -b ./tmp/cookie.txt
+```
+
+Once you are ready, you can create a Pull Request. I'm not activily maintaining the plugin as I don't use it at the moment but I'm happy to review pull request/fix issues/add functionalities when needed.

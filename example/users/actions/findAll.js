@@ -2,6 +2,6 @@
 
 const User = require('../../users/models/user.model');
 
-module.exports = (request, reply) => {
-  reply(User.findAll());
+module.exports = (request, h) => {
+  return User.findAll();
 };

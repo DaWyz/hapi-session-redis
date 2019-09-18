@@ -14,8 +14,5 @@ const users = [{
 
 module.exports = {
   findAll: () => (users.map((user) => ({ id: user.id, email: user.email, name: user.name }))),
-  findByEmail: (email) => (
-    users
-    .find((user) => user.email === email)
-  )
+  findByEmail: (email) => users.find((user) => user.email === email)
 };
