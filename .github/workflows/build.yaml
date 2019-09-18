@@ -5,8 +5,8 @@ on: [push]
 jobs:
   build:
     runs-on:
-      using: docker
-      image: Dockerfile
+      using: "docker"
+      image: "Dockerfile"
 
     strategy:
       matrix:

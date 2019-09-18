@@ -1,3 +1,3 @@
-FROM node:10-alpine
+FROM alpine:latest
 
 RUN apk add --no-cache redis
