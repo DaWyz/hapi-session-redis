@@ -4,9 +4,7 @@ on: [push]
 
 jobs:
   build:
-    runs-on:
-      using: "docker"
-      image: "Dockerfile"
+    runs-on: ubuntu-latest
 
     strategy:
       matrix:
@@ -18,11 +16,13 @@ jobs:
         uses: actions/setup-node@v1
         with:
           node-version: ${{ matrix.node-version }}
-      - name: npm install, test and lint
-        run: |
-          npm install
-          npm test
-          npm run functional
-          npm run lint
-        env:
-          CI: true
+      - name: install redis package
+        run: apk add --no-cache redis
+      - name: install dependencies
+        run: npm ci
+      - name: run integration test
+        run: npm test
+      - name: run functional test
+        run: npm run functional
+      - name: lint code
+        run: npm run lint
