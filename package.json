@@ -1,6 +1,6 @@
 {
   "name": "hapi-session-redis",
-  "version": "3.0.1",
+  "version": "4.0.0",
   "description": "Cookie authentication plugin using redis as session store",
   "main": "dist/index.js",
   "directories": {
@@ -36,23 +36,23 @@
   },
   "homepage": "https://github.com/DaWyz/hapi-session-redis#readme",
   "dependencies": {
-    "@hapi/boom": "7.4.3",
-    "@hapi/hapi": "18.4.1",
-    "@hapi/hoek": "8.2.4",
-    "@hapi/joi": "16.1.1",
+    "@hapi/boom": "9.1.0",
+    "@hapi/hapi": "20.0.1",
+    "@hapi/hoek": "9.1.0",
+    "@hapi/joi": "17.1.1",
     "bluebird": "3.7.2",
     "redis": "3.0.2",
-    "uuid": "7.0.2"
+    "uuid": "8.3.1"
   },
   "devDependencies": {
-    "@babel/cli": "7.8.4",
-    "@babel/core": "7.6.0",
-    "@babel/preset-env": "7.6.0",
-    "@hapi/code": "6.0.0",
+    "@babel/cli": "7.11.6",
+    "@babel/core": "7.11.6",
+    "@babel/preset-env": "7.11.5",
+    "@hapi/code": "8.0.2",
     "@hapi/eslint-config-hapi": "13.0.2",
-    "@hapi/eslint-plugin-hapi": "4.3.5",
-    "@hapi/lab": "22.0.4",
+    "@hapi/eslint-plugin-hapi": "4.3.6",
+    "@hapi/lab": "24.0.0",
     "mockery": "2.1.0",
-    "nodemon": "2.0.2"
+    "nodemon": "2.0.5"
   }
 }
