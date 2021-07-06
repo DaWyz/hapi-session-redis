@@ -79,7 +79,7 @@ Make sure everything works by running:
 ```sh
 npm run test
 npm run functional
-npm lint
+npm run lint
 ```
 
 If you want to play with the example folder, here is the list of endpoints you can call:
